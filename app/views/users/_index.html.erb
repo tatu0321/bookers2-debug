@@ -9,8 +9,19 @@
   <tbody>
     <% users.each do |user| %>
       <tr>
-        <td><%= image_tag user.get_profile_image, size: '50x50' %></td>
+        <td><%= image_tag user.get_profile_image, size: '80x80' %></td>
         <td><%= user.name %></td>
+        <td>フォロー数: <%= user.following.count %></td>
+        <td>フォロワー数: <%= user.followers.count %></td>
+        <td>
+          <% if current_user != user %>
+            <% if current_user.following?(user) %>
+              <%= link_to "フォローを外す", user_relationships_path(user.id), method: :delete %>
+            <% else %>
+              <%= link_to "フォローする", user_relationships_path(user.id), method: :post %>
+            <% end %>
+          <% end %>
+        </td>
         <td><%= link_to 'Show', user %></td>
       </tr>
     <% end %>
