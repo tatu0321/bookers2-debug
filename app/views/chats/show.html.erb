@@ -3,12 +3,9 @@
 <div class="message" style="width: 400px;">
   <% @chats.each do |chat| %>
     <% if chat.user_id == current_user.id %>
-      <%= render "chats/chat", chat: chat %>
+      <p style="text-align: right;"><%= chat.message %></p>
     <% else %>
-      <div class="left-container d-flex">
-        <%= image_tag @user.get_profile_image, size: '30×30', style: 'border-radius: 50%' %>
-        <p class=ml-1 style="text-align: left;"><span style="background-color: #F5F5DC; padding: 5px; border-radius: 10px;"><%= chat.message %></span></p>
-      </div>
+     <p style="text-align: left;"><%= chat.message %></p>
     <% end %>
   <% end %>
 </div>
@@ -19,6 +16,5 @@
 
 <%= form_with model: @chat, data: {remote: true} do |f| %>
   <%= f.text_field :message %>
-  <%= f.submit "送信", class: "btn-btn-dark btn-sm" %>
   <%= f.hidden_field :room_id %>
 <% end %>
